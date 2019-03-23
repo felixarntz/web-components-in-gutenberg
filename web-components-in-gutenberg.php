@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name: Web Components in Gutenberg
  * Plugin URI:  https://github.com/felixarntz/web-components-in-gutenberg
- * Description: Tests with Web Components in Gutenberg.
+ * Description: Examples of using Web Components in Gutenberg.
  * Version:     1.0.0
  * Author:      Felix Arntz
  * Author URI:  https://felix-arntz.me

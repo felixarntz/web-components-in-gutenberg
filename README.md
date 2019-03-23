@@ -1,3 +1,3 @@
 # Web Components in Gutenberg
 
-Tests with Web Components in Gutenberg.
+Examples of using Web Components in Gutenberg.
