@@ -16,9 +16,34 @@
 
 const template = document.createElement( 'template' );
 template.innerHTML = `
-	<wcig-tab-list>
+	<style>
+		:host {
+			display: block;
+		}
+
+		:host([hidden]) {
+			display: none;
+		}
+
+		.tab-list {
+			display: block;
+			margin: 0;
+			padding-top: 9px;
+			padding-bottom: 0;
+			border-bottom: 1px solid #ccc;
+			line-height: inherit;
+		}
+
+		.tab-list:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+	</style>
+
+	<div class="tab-list" role="tablist">
 		<slot name="tabs">
-	</wcig-tab-list>
+	</div>
 
 	<slot name="tabpanels"></slot>
 `;
@@ -79,18 +104,16 @@ class Tabs extends HTMLElement {
 		}
 
 		Array.from( this.querySelectorAll( 'wcig-tab' ) ).forEach( tab => {
-			let tabpanel;
 			if ( tab.href && '#' === tab.href.substr( 0, 1 ) ) {
-				tabpanel = this.querySelector( tab.href );
+				const tabpanel = this.querySelector( tab.href );
+				if ( tabpanel ) {
+					tabpanel.active = tab === target;
+				}
 			}
 
-			if ( tab === target ) {
-				tabpanel.active = true;
-				return;
+			if ( tab !== target ) {
+				tab.selected = false;
 			}
-
-			tab.selected    = false;
-			tabpanel.active = false;
 		} );
 
 		this.selectedTab = target;

@@ -30,7 +30,6 @@ function register_scripts() {
 
 	$modules = array(
 		'wcig-tab'             => 'custom-elements/tab.js',
-		'wcig-tab-list'        => 'custom-elements/tab-list.js',
 		'wcig-tab-panel'       => 'custom-elements/tab-panel.js',
 		'wcig-tabs'            => 'custom-elements/tabs.js',
 		'wcig-custom-elements' => 'custom-elements/index.js',

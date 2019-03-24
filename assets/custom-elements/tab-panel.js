@@ -30,6 +30,11 @@ template.innerHTML = `
 		:host([active][hidden]) {
 			display: none;
 		}
+
+		:host(:focus),
+		:host(:hover) {
+			outline: none;
+		}
 	</style>
 
 	<slot></slot>
