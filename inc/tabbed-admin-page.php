@@ -16,8 +16,8 @@ namespace Felix_Arntz\Web_Components_In_Gutenberg\Tabbed_Admin_Page;
  */
 function register_page() {
 	$hook_suffix = add_menu_page(
-		__( 'Custom Elements Tabs', 'web-components-in-gutenberg' ),
-		__( 'Custom Elements', 'web-components-in-gutenberg' ),
+		__( 'Web Components', 'web-components-in-gutenberg' ),
+		__( 'Web Components', 'web-components-in-gutenberg' ),
 		'manage_options',
 		'wcig-tabbed-admin-page',
 		__NAMESPACE__ . '\render_page',
@@ -50,30 +50,53 @@ add_action( 'admin_menu', __NAMESPACE__ . '\register_page' );
  * @since 1.0.0
  */
 function render_page() {
-	/* translators: %d: tab ID */
-	$tab_title = __( 'Tab %d', 'web-components-in-gutenberg' );
-
-	/* translators: %d: tab ID */
-	$tab_description = __( 'This is the content of <strong>tab %d</strong>.', 'web-components-in-gutenberg' );
-
-	$tabs = array();
-	for ( $i = 1; $i <= 4; $i++ ) {
-		$tabs[ "tab{$i}" ] = array(
-			'title'           => sprintf( $tab_title, $i ),
-			'render_callback' => function() use ( $tab_title, $tab_description, $i ) {
+	$tabs = array(
+		'tab1' => array(
+			'title'           => __( 'Introduction', 'web-components-in-gutenberg' ),
+			'render_callback' => function() {
 				?>
-				<h2><?php printf( $tab_title, $i ); ?></h2>
-				<p><?php printf( $tab_description, $i ); ?></p>
+				<h2><?php esc_html_e( 'Introduction to Web Components', 'web-components-in-gutenberg' ); ?></h2>
+				<h3><?php esc_html_e( 'Custom Elements', 'web-components-in-gutenberg' ); ?></h3>
+				<p><?php esc_html_e( 'Custom elements give developers the ability to extend HTML and create their own tags. Because custom elements are standards based they benefit from the Web&apos;s built-in component model. The result is more modular code that can be reused in many different contexts.', 'web-components-in-gutenberg' ); ?></p>
+				<h3><?php esc_html_e( 'Shadow DOM', 'web-components-in-gutenberg' ); ?></h3>
+				<p><?php esc_html_e( 'Shadow DOM is a web standard that offers component style and markup encapsulation. It is a critically important piece of the Web Components story as it ensures that a component will work in any environment even if other CSS or JavaScript is at play on the page.', 'web-components-in-gutenberg' ); ?></p>
 				<?php
-			}
-		);
-	}
+			},
+		),
+		'tab2' => array(
+			'title'           => __( 'Polymer', 'web-components-in-gutenberg' ),
+			'render_callback' => function() {
+				?>
+				<h2><?php esc_html_e( 'Web Components and the Polymer Project', 'web-components-in-gutenberg' ); ?></h2>
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/7CUO7PyD5zA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<?php
+			},
+		),
+		'tab3' => array(
+			'title'           => __( 'PWA Starter Kit', 'web-components-in-gutenberg' ),
+			'render_callback' => function() {
+				?>
+				<h2><?php esc_html_e( 'PWA starter kit: build fast, scalable, modern apps with Web Components', 'web-components-in-gutenberg' ); ?></h2>
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/we3lLo-UFtk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<?php
+			},
+		),
+		'tab4' => array(
+			'title'           => __( 'React & Web Components', 'web-components-in-gutenberg' ),
+			'render_callback' => function() {
+				?>
+				<h2><?php esc_html_e( 'React vs Web Components?', 'web-components-in-gutenberg' ); ?></h2>
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/plt-iH_47GE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<?php
+			},
+		),
+	);
 
 	$current_tab_id = 'tab1';
 
 	?>
 	<div class="wrap">
-		<h1><?php esc_html_e( 'Custom Elements Tabs', 'web-components-in-gutenberg' ); ?></h1>
+		<h1><?php esc_html_e( 'Web Components', 'web-components-in-gutenberg' ); ?></h1>
 
 		<wcig-tabs>
 			<?php foreach ( $tabs as $tab_id => $tab_args ) : ?>
