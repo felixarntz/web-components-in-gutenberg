@@ -14,6 +14,15 @@
  * GNU General Public License for more details.
  */
 
+const template = document.createElement( 'template' );
+template.innerHTML = `
+	<wcig-tab-list>
+		<slot name="tabs">
+	</wcig-tab-list>
+
+	<slot name="tabpanels"></slot>
+`;
+
 class Tabs extends HTMLElement {
 	constructor() {
 		super();
@@ -21,13 +30,7 @@ class Tabs extends HTMLElement {
 		this.selectedTab = null;
 
 		this._shadowRoot = this.attachShadow( { mode: 'open' } );
-		this._shadowRoot.innerHTML = `
-			<wcig-tab-list>
-				<slot name="tabs">
-			</wcig-tab-list>
-
-			<slot name="tabpanels"></slot>
-		`;
+		this._shadowRoot.appendChild( template.content.cloneNode( true ) );
 	}
 
 	static is() {

@@ -14,6 +14,32 @@
  * GNU General Public License for more details.
  */
 
+const template = document.createElement( 'template' );
+template.innerHTML = `
+	<style>
+		:host {
+			display: block;
+			margin: 0;
+			padding-top: 9px;
+			padding-bottom: 0;
+			border-bottom: 1px solid #ccc;
+			line-height: inherit;
+		}
+
+		:host([hidden]) {
+			display: none;
+		}
+
+		:host:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+	</style>
+
+	<slot></slot>
+`;
+
 class TabList extends HTMLElement {
 	constructor() {
 		super();
@@ -21,30 +47,7 @@ class TabList extends HTMLElement {
 		this.selectedTab = null;
 
 		this._shadowRoot = this.attachShadow( { mode: 'open' } );
-		this._shadowRoot.innerHTML = `
-			<style>
-				:host {
-					display: block;
-					margin: 0;
-					padding-top: 9px;
-					padding-bottom: 0;
-					border-bottom: 1px solid #ccc;
-					line-height: inherit;
-				}
-
-				:host([hidden]) {
-					display: none;
-				}
-
-				:host:after {
-					content: "";
-					display: table;
-					clear: both;
-				}
-			</style>
-
-			<slot></slot>
-		`;
+		this._shadowRoot.appendChild( template.content.cloneNode( true ) );
 	}
 
 	static is() {

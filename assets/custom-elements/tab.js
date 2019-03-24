@@ -14,58 +14,61 @@
  * GNU General Public License for more details.
  */
 
+const template = document.createElement( 'template' );
+template.innerHTML = `
+	<style>
+		:host {
+			display: block;
+			float: left;
+			margin-left: .5em;
+			padding: 5px 10px;
+			font-size: 14px;
+			line-height: 24px;
+			font-weight: 600;
+			text-decoration: none;
+			white-space: nowrap;
+			background: #e5e5e5;
+			color: #555;
+			border: 1px solid #ccc;
+			border-bottom: none;
+			cursor: pointer;
+		}
+
+		:host([hidden]) {
+			display: none;
+		}
+
+		:host(:disabled) {
+			cursor: not-allowed;
+		}
+
+		:host(:focus),
+		:host(:hover) {
+			outline: none;
+			background-color: #fff;
+			color: #444;
+		}
+
+		:host([selected]),
+		:host([selected]:focus),
+		:host([selected]:focus:active),
+		:host([selected]:hover) {
+			margin-bottom: -1px;
+			background: #f1f1f1;
+			color: #000;
+			border-bottom: 1px solid #f1f1f1;
+		}
+	</style>
+
+	<slot></slot>
+`;
+
 class Tab extends HTMLElement {
 	constructor() {
 		super();
 
 		this._shadowRoot = this.attachShadow( { mode: 'open' } );
-		this._shadowRoot.innerHTML = `
-			<style>
-				:host {
-					display: block;
-					float: left;
-					margin-left: .5em;
-					padding: 5px 10px;
-					font-size: 14px;
-					line-height: 24px;
-					font-weight: 600;
-					text-decoration: none;
-					white-space: nowrap;
-					background: #e5e5e5;
-					color: #555;
-					border: 1px solid #ccc;
-					border-bottom: none;
-					cursor: pointer;
-				}
-
-				:host([hidden]) {
-					display: none;
-				}
-
-				:host(:disabled) {
-					cursor: not-allowed;
-				}
-
-				:host(:focus),
-				:host(:hover) {
-					outline: none;
-					background-color: #fff;
-					color: #444;
-				}
-
-				:host([selected]),
-				:host([selected]:focus),
-				:host([selected]:focus:active),
-				:host([selected]:hover) {
-					margin-bottom: -1px;
-					background: #f1f1f1;
-					color: #000;
-					border-bottom: 1px solid #f1f1f1;
-				}
-			</style>
-
-			<slot></slot>
-		`;
+		this._shadowRoot.appendChild( template.content.cloneNode( true ) );
 	}
 
 	static is() {

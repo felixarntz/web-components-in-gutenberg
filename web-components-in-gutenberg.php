@@ -37,7 +37,7 @@ function register_scripts() {
 	);
 
 	foreach ( $modules as $handle => $rel_path ) {
-		wp_register_script( $handle, $assets_dir . $rel_path, array(), '1.0.0', true );
+		wp_register_script( $handle, $assets_dir . $rel_path, array(), '1.0.0' );
 		wp_script_add_data( $handle, 'type', 'module' );
 	}
 }

@@ -14,30 +14,33 @@
  * GNU General Public License for more details.
  */
 
+const template = document.createElement( 'template' );
+template.innerHTML = `
+	<style>
+		:host {
+			display: none;
+			padding-top: 9px;
+		}
+
+		:host([active]) {
+			display: block;
+		}
+
+		:host([hidden]),
+		:host([active][hidden]) {
+			display: none;
+		}
+	</style>
+
+	<slot></slot>
+`;
+
 class TabPanel extends HTMLElement {
 	constructor() {
 		super();
 
 		this._shadowRoot = this.attachShadow( { mode: 'open' } );
-		this._shadowRoot.innerHTML = `
-			<style>
-				:host {
-					display: none;
-					padding-top: 9px;
-				}
-
-				:host([active]) {
-					display: block;
-				}
-
-				:host([hidden]),
-				:host([active][hidden]) {
-					display: none;
-				}
-			</style>
-
-			<slot></slot>
-		`;
+		this._shadowRoot.appendChild( template.content.cloneNode( true ) );
 	}
 
 	static is() {
