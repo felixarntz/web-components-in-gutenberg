@@ -14,6 +14,22 @@
  * GNU General Public License for more details.
  */
 
+const getSiblingTab = ( element, mode ) => {
+	if ( 'next' !== mode ) {
+		mode = 'previous';
+	}
+
+	while ( element[ `${ mode }ElementSibling` ] ) {
+		if ( 'WCIG-TAB' === element[ `${ mode }ElementSibling` ].tagName && ! element[ `${ mode }ElementSibling` ].disabled ) {
+			return element[ `${ mode }ElementSibling` ];
+		}
+
+		element = element[ `${ mode }ElementSibling` ];
+	}
+
+	return null;
+};
+
 const template = document.createElement( 'template' );
 template.innerHTML = `
 	<style>
@@ -86,17 +102,15 @@ class Tabs extends HTMLElement {
 		} );
 
 		this.addEventListener( 'select', this._onSelect );
+		this.addEventListener( 'keyup', this._onKeyUp );
 	}
 
 	disconnectedCallback() {
 		this.removeEventListener( 'select', this._onSelect );
+		this.removeEventListener( 'keyup', this._onKeyUp );
 	}
 
 	_onSelect( event ) {
-		if ( this.disabled || this.selected ) {
-			return;
-		}
-
 		const target = event.target;
 
 		if ( 'WCIG-TAB' !== target.tagName ) {
@@ -119,6 +133,31 @@ class Tabs extends HTMLElement {
 		this.selectedTab = target;
 
 		this._dispatchChangeEvent();
+	}
+
+	_onKeyUp( event ) {
+		const target  = event.target;
+		const keycode = event.key || event.code;
+
+		if ( 'WCIG-TAB' !== target.tagName ) {
+			return;
+		}
+
+		if ( 'ArrowRight' === keycode ) {
+			const next = getSiblingTab( target, 'next' );
+			console.log( next );
+			if ( next ) {
+				next.click();
+				next.focus();
+			}
+		} else if ( 'ArrowLeft' === keycode ) {
+			const previous = getSiblingTab( target, 'previous' );
+			console.log( previous );
+			if ( previous ) {
+				previous.click();
+				previous.focus();
+			}
+		}
 	}
 
 	_dispatchChangeEvent() {
