@@ -9,5 +9,5 @@ const elements = [
 ];
 
 elements.forEach( element => {
-	customElements.define( element.is(), element );
+	customElements.define( element.is, element );
 } );
