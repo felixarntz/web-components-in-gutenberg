@@ -145,14 +145,12 @@ class Tabs extends HTMLElement {
 
 		if ( 'ArrowRight' === keycode ) {
 			const next = getSiblingTab( target, 'next' );
-			console.log( next );
 			if ( next ) {
 				next.click();
 				next.focus();
 			}
 		} else if ( 'ArrowLeft' === keycode ) {
 			const previous = getSiblingTab( target, 'previous' );
-			console.log( previous );
 			if ( previous ) {
 				previous.click();
 				previous.focus();
