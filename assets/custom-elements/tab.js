@@ -71,7 +71,7 @@ class Tab extends HTMLElement {
 		this._shadowRoot.appendChild( template.content.cloneNode( true ) );
 	}
 
-	static is() {
+	static get is() {
 		return 'wcig-tab';
 	}
 
