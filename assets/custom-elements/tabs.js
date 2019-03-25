@@ -69,6 +69,7 @@ class Tabs extends HTMLElement {
 		super();
 
 		this.selectedTab = null;
+		this.stateAware  = false;
 
 		this._shadowRoot = this.attachShadow( { mode: 'open' } );
 		this._shadowRoot.appendChild( template.content.cloneNode( true ) );
@@ -119,6 +120,10 @@ class Tabs extends HTMLElement {
 
 		if ( 'WCIG-TAB' !== target.tagName ) {
 			return;
+		}
+
+		if ( this.stateAware && target.href && '#' === target.href.substr( 0, 1 ) ) {
+			history.replaceState( undefined, undefined, target.href );
 		}
 
 		Array.from( this.querySelectorAll( 'wcig-tab' ) ).forEach( tab => {
@@ -178,6 +183,20 @@ class Tabs extends HTMLElement {
 
 	getSelectedTab() {
 		return this.selectedTab;
+	}
+
+	get stateAware() {
+		return this.hasAttribute( 'state-aware' );
+	}
+
+	set stateAware( val ) {
+		const isSelected = Boolean( val );
+
+		if ( isSelected ) {
+			this.setAttribute( 'state-aware', '' );
+		} else {
+			this.removeAttribute( 'state-aware' );
+		}
 	}
 }
 

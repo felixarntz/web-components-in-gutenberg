@@ -125,10 +125,6 @@ class Tab extends HTMLElement {
 			return;
 		}
 
-		if ( this.href && '#' === this.href.substr( 0, 1 ) ) {
-			history.replaceState( undefined, undefined, this.href );
-		}
-
 		this.selected = true;
 
 		this._dispatchSelectEvent();
