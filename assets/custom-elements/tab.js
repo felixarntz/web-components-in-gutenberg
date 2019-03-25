@@ -106,8 +106,12 @@ class Tab extends HTMLElement {
 
 		const isSelected = this.hasAttribute( 'selected' );
 
-		this.setAttribute( 'tabindex', isSelected ? 0 : -1 );
-		this.setAttribute( 'aria-selected', isSelected ? 'true' : 'false' );
+		if ( ! this.hasAttribute( 'tabindex' ) ) {
+			this.setAttribute( 'tabindex', isSelected ? 0 : -1 );
+		}
+		if ( ! this.hasAttribute( 'aria-selected' ) ) {
+			this.setAttribute( 'aria-selected', isSelected ? 'true' : 'false' );
+		}
 
 		this.addEventListener( 'click', this._onClick );
 	}

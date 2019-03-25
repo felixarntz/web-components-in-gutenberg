@@ -79,12 +79,11 @@ class TabPanel extends HTMLElement {
 
 		const isActive = this.hasAttribute( 'active' );
 
-		this.setAttribute( 'tabindex', isActive ? 0 : -1 );
-		this.setAttribute( 'aria-hidden', isActive ? 'false' : 'true' );
-		if ( isActive ) {
-			this.removeAttribute( 'hidden' );
-		} else {
-			this.setAttribute( 'hidden', '' );
+		if ( ! this.hasAttribute( 'tabindex' ) ) {
+			this.setAttribute( 'tabindex', isActive ? 0 : -1 );
+		}
+		if ( ! this.hasAttribute( 'aria-hidden' ) ) {
+			this.setAttribute( 'aria-hidden', isActive ? 'false' : 'true' );
 		}
 	}
 

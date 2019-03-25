@@ -97,8 +97,12 @@ class Tabs extends HTMLElement {
 				tab.id = `${ panel.id }-tab`;
 			}
 
-			tab.setAttribute( 'aria-controls', panel.id );
-			panel.setAttribute( 'aria-labelledby', tab.id );
+			if ( ! tab.hasAttribute( 'aria-controls' ) ) {
+				tab.setAttribute( 'aria-controls', panel.id );
+			}
+			if ( ! panel.hasAttribute( 'aria-labelledby' ) ) {
+				panel.setAttribute( 'aria-labelledby', tab.id );
+			}
 		} );
 
 		this.addEventListener( 'select', this._onSelect );
