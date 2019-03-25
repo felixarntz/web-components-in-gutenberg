@@ -44,8 +44,8 @@ class TabPanel extends HTMLElement {
 	constructor() {
 		super();
 
-		this._shadowRoot = this.attachShadow( { mode: 'open' } );
-		this._shadowRoot.appendChild( template.content.cloneNode( true ) );
+		this.attachShadow( { mode: 'open' } );
+		this.shadowRoot.appendChild( template.content.cloneNode( true ) );
 	}
 
 	static get is() {
