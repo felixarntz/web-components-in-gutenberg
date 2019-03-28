@@ -1,5 +1,5 @@
 /*
- * Tabs module.
+ * Tabs custom element module.
  *
  * Web Components in Gutenberg, Copyright 2019 Google LLC
  *

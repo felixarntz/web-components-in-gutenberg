@@ -21,18 +21,19 @@
 namespace Felix_Arntz\Web_Components_In_Gutenberg;
 
 /**
- * Registers module scripts.
+ * Registers custom element module scripts.
  *
  * @since 1.0.0
  */
-function register_scripts() {
-	$assets_dir  = plugin_dir_url( __FILE__ ) . 'assets/';
+function register_custom_elements() {
+	$assets_dir  = plugin_dir_url( __FILE__ ) . 'assets/custom-elements/';
 
 	$modules = array(
-		'wcig-tab'             => 'custom-elements/tab.js',
-		'wcig-tab-panel'       => 'custom-elements/tab-panel.js',
-		'wcig-tabs'            => 'custom-elements/tabs.js',
-		'wcig-custom-elements' => 'custom-elements/index.js',
+		'wcig-tab'                    => 'tab.js',
+		'wcig-tab-panel'              => 'tab-panel.js',
+		'wcig-tabs'                   => 'tabs.js',
+		'wcig-post-list-item'         => 'post-list-item.js',
+		'wcig-post-list'              => 'post-list.js',
 	);
 
 	foreach ( $modules as $handle => $rel_path ) {
@@ -40,8 +41,8 @@ function register_scripts() {
 		wp_script_add_data( $handle, 'type', 'module' );
 	}
 }
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\register_scripts' );
-add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\register_scripts' );
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\register_custom_elements' );
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\register_custom_elements' );
 
 /**
  * Adds support for custom script types.
@@ -64,3 +65,4 @@ function add_script_type_support( string $tag, string $handle ) : string {
 add_filter( 'script_loader_tag', __NAMESPACE__ . '\add_script_type_support', 10, 2 );
 
 require_once plugin_dir_path( __FILE__ ) . '/inc/tabbed-admin-page.php';
+require_once plugin_dir_path( __FILE__ ) . '/inc/gutenberg.php';

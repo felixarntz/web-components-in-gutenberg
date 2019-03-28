@@ -31,14 +31,11 @@ function register_page() {
 				return;
 			}
 
-			$modules = array(
-				'wcig-tab',
-				'wcig-tabs',
-				'wcig-custom-elements',
-			);
-			foreach ( $modules as $module ) {
-				wp_enqueue_script( $module );
-			}
+			$handle = 'wcig-tabbed-admin-page';
+			$src    = plugin_dir_url( __DIR__ ) . 'assets/tabbed-admin-page.js';
+
+			wp_enqueue_script( $handle, $src, array(), '1.0.0' );
+			wp_script_add_data( $handle, 'type', 'module' );
 		}
 	);
 }
