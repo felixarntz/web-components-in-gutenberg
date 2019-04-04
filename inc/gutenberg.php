@@ -18,7 +18,7 @@ function enqueue_block_assets() {
 	$handle = 'wcig-gutenberg-custom-elements';
 	$src    = plugin_dir_url( __DIR__ ) . 'assets/gutenberg-custom-elements.js';
 
-	wp_enqueue_script( $handle, $src, array(), '1.0.0' );
+	wp_enqueue_script( $handle, $src, array( 'wp-date' ), '1.0.0' );
 	wp_script_add_data( $handle, 'type', 'module' );
 }
 add_action( 'enqueue_block_assets', __NAMESPACE__ . '\enqueue_block_assets' );

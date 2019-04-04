@@ -36,13 +36,27 @@ const {
 const { apiFetch } = wp;
 const { addQueryArgs } = wp.url;
 const { __ } = wp.i18n;
-const {
-	dateI18n,
-	format,
-	__experimentalGetSettings
-} = wp.date;
 
 const html = htm.bind( createElement );
+
+class LatestPostsSave extends Component {
+	render() {
+		const { attributes } = this.props;
+		const { displayPostDate, postLayout, columns, order, orderBy, categories, postsToShow } = attributes;
+
+		return html`
+			<wcig-wordpress-post-list
+				columns=${ postLayout === 'grid' && columns ? columns : undefined }
+				display-date=${ displayPostDate ? '' : undefined }
+				number="${ postsToShow }"
+				categories=${ categories ? categories : undefined }
+				order="${ order || 'DESC' }"
+				orderby="${ orderBy || 'date' }"
+			>
+			</wcig-wordpress-post-list>
+		`;
+	}
+}
 
 class LatestPostsEdit extends Component {
 	constructor() {
@@ -53,23 +67,21 @@ class LatestPostsEdit extends Component {
 		this.toggleDisplayPostDate = this.toggleDisplayPostDate.bind( this );
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
 		this.isStillMounted = true;
-		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( '/wp/v2/categories', { per_page: -1 } ),
-		} ).then(
-			( categoriesList ) => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList } );
-				}
+
+		try {
+			const categoriesList = await apiFetch( {
+				path: addQueryArgs( '/wp/v2/categories', { per_page: -1 } ),
+			} );
+			if ( this.isStillMounted ) {
+				this.setState( { categoriesList } );
 			}
-		).catch(
-			() => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList: [] } );
-				}
+		} catch ( err ) {
+			if ( this.isStillMounted ) {
+				this.setState( { categoriesList: [] } );
 			}
-		);
+		}
 	}
 
 	componentWillUnmount() {
@@ -92,7 +104,8 @@ class LatestPostsEdit extends Component {
 			<${ InspectorControls }>
 				<${ PanelBody } title=${ __( 'Latest Posts Settings', 'web-components-in-gutenberg' ) }>
 					<${ QueryControls }
-						{ ...${ order, orderBy } }
+						order=${ order }
+						orderBy=${ orderBy }
 						numberOfItems=${ postsToShow }
 						categoriesList=${ categoriesList }
 						selectedCategoryId=${ categories }
@@ -135,28 +148,13 @@ class LatestPostsEdit extends Component {
 			},
 		];
 
-		const dateFormat = __experimentalGetSettings().formats.date;
-
 		return html`
 			<${ Fragment }>
 				${ inspectorControls }
 				<${ BlockControls }>
 					<${ Toolbar } controls=${ layoutControls } />
 				</${ BlockControls }>
-				<wcig-post-list
-					date-format="${ dateFormat }"
-					${ postLayout === 'grid' ? `columns="${ columns }"` : '' }
-				>
-					<wcig-post-list-item href="https://www.google.com">
-						Post Title 1
-						<time slot="extra" date-time="${ format( 'c', '2018-11-23' ) }">
-							${ dateI18n( dateFormat, '2018-11-23' ) }
-						</time>
-					</wcig-post-list-item>
-					<wcig-post-list-item href="https://www.google.com">
-						Post Title 2
-					</wcig-post-list-item>
-				</wcig-post-list>
+				<${ LatestPostsSave } attributes=${ attributes } />
 			</${ Fragment }>
 		`;
 	}
@@ -213,18 +211,7 @@ const settings = {
 
 	edit: LatestPostsEdit,
 
-	save: props => {
-		return html`
-			<wcig-post-list>
-				<wcig-post-list-item href="https://www.google.com">
-					Post Title 1
-				</wcig-post-list-item>
-				<wcig-post-list-item href="https://www.google.com">
-					Post Title 2
-				</wcig-post-list-item>
-			</wcig-post-list>
-		`;
-	}
+	save: LatestPostsSave,
 };
 
 export default { name, settings };
