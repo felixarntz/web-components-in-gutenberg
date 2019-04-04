@@ -27,9 +27,9 @@ template.innerHTML = `
 			font-weight: 600;
 			text-decoration: none;
 			white-space: nowrap;
-			background: #e5e5e5;
-			color: #555;
-			border: 1px solid #ccc;
+			background: var(--tab-background-color, #e5e5e5);
+			color: var(--tab-color, #555);
+			border: 1px solid var(--tab-border-color, #ccc);
 			border-bottom: none;
 			cursor: pointer;
 		}
@@ -45,8 +45,8 @@ template.innerHTML = `
 		:host(:focus),
 		:host(:hover) {
 			outline: none;
-			background-color: #fff;
-			color: #444;
+			background-color: var(--tab-focus-background-color, #fff);
+			color: var(--tab-focus-color, #444);
 		}
 
 		:host([selected]),
@@ -54,9 +54,9 @@ template.innerHTML = `
 		:host([selected]:focus:active),
 		:host([selected]:hover) {
 			margin-bottom: -1px;
-			background: #f1f1f1;
-			color: #000;
-			border-bottom: 1px solid #f1f1f1;
+			background: var(--body-background-color, #f1f1f1);
+			color: var(--text-color, #000);
+			border-bottom: 1px solid var(--body-background-color, #f1f1f1);
 		}
 	</style>
 

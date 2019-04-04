@@ -19,6 +19,8 @@ template.innerHTML = `
 	<style>
 		:host {
 			display: list-item;
+			color: var(--text-color, #111);
+			font-family: var(--text-font, Roboto, sans-serif);
 		}
 
 		:host([hidden]) {
@@ -26,19 +28,21 @@ template.innerHTML = `
 		}
 
 		a {
-			color: #0073aa;
+			color: var(--link-color, #0073aa);
 		}
 
 		a:hover,
 		a:focus {
-			color: #124964;
-			box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30,140,190,.8);
-			outline: 1px solid transparent;
+			color: var(--link-focus-color, #124964);
+		}
+
+		a:focus {
+			outline: thin dotted;
 		}
 
 		:host ::slotted(time) {
 			display: block;
-			color: #6c7781;
+			color: var(--text-light-color, #6c7781);
 			font-size: 13px;
 		}
 	</style>
@@ -93,10 +97,6 @@ class PostListItem extends HTMLElement {
 	connectedCallback() {
 		if ( ! this.hasAttribute( 'role' ) ) {
 			this.setAttribute( 'role', 'listitem' );
-		}
-
-		if ( this.hasAttribute( 'href' ) ) {
-			this.attributeChangedCallback( 'href', null, this.getAttribute( 'href' ) );
 		}
 	}
 

@@ -46,7 +46,7 @@ template.innerHTML = `
 			margin: 0;
 			padding-top: 9px;
 			padding-bottom: 0;
-			border-bottom: 1px solid #ccc;
+			border-bottom: 1px solid var(--tab-border-color, #ccc);
 			line-height: inherit;
 		}
 
