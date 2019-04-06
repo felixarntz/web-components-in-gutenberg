@@ -34,6 +34,7 @@ function register_page() {
 			$handle = 'wcig-tabbed-admin-page';
 			$src    = plugin_dir_url( __DIR__ ) . 'assets/tabbed-admin-page.js';
 
+			// Enqueue the module registering custom elements for the admin page.
 			wp_enqueue_script( $handle, $src, array(), '1.0.0' );
 			wp_script_add_data( $handle, 'type', 'module' );
 		}

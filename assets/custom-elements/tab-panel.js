@@ -1,6 +1,10 @@
 /*
  * TabPanel custom element module.
  *
+ * This custom element represents a single tab panel within a Tabs
+ * element. It should be associated with another Tab, but is generally
+ * optional.
+ *
  * Web Components in Gutenberg, Copyright 2019 Google LLC
  *
  * This program is free software: you can redistribute it and/or modify

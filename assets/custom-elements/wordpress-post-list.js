@@ -1,6 +1,12 @@
 /*
  * WordPressPostList custom element module.
  *
+ * This custom element extends PostList and represents a higher order
+ * variant specific to WordPress. It will automatically include posts
+ * from the WordPress database, queried via parameters defined as
+ * attributes. It automatically appends each post found as a PostListItem
+ * element.
+ *
  * Web Components in Gutenberg, Copyright 2019 Google LLC
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,6 +22,7 @@
 
 import PostList from './post-list.js';
 
+// Tries to determine the WordPress REST API root URL.
 const restRoot = ( () => {
 	if ( window.wpRestRoot ) {
 		return window.wpRestRoot;
@@ -29,6 +36,7 @@ const restRoot = ( () => {
 	return document.location.origin + '/wp-json/';
 } )();
 
+// Formats a given date in the given dateFormat, if the respective WordPress API is loaded.
 const formatDate = ( dateFormat, date ) => {
 	if ( ! window.wp || ! window.wp.date ) {
 		return date;
@@ -41,6 +49,8 @@ const formatDate = ( dateFormat, date ) => {
 	return window.wp.date.dateI18n( dateFormat, date );
 };
 
+// Returns a PostListItem element created for the given post object from the WordPress REST
+// API. If dateFormat is passed, the PostListItem will also include the post date.
 const getPostListItem = ( post, dateFormat ) => {
 	const item = document.createElement( 'wcig-post-list-item' );
 
@@ -63,7 +73,7 @@ const getPostListItem = ( post, dateFormat ) => {
 	return item;
 };
 
-// Modified version of the fetch function which allows delaying the request.
+// Wraps the regular window.fetch function in a way which allows delaying the request.
 const fetch = ( ...args ) => {
 	const context = this;
 
@@ -152,16 +162,20 @@ class WordPressPostList extends PostList {
 		}
 
 		this._loading    = true;
+		// If another API request already on the way, abort it through its controller as it's out of date.
 		if ( this._controller ) {
 			this._controller.abort();
 		}
+		// Instantiate an AbortController that allows to abort our new API request if needed (see above).
 		this._controller = new AbortController();
 		this._posts      = [];
 		this.updateContent();
 
 		try {
 			const response = await fetch( url, {
+				// Allow aborting the API request when a new one is initiated that would override it anyway.
 				signal: this._controller.signal,
+				// Delay the API request by 50 milliseconds so that it doesn't unnecessarily fire if multiple attribute changes cause multiple updates.
 				delay: 50,
 			} );
 			if ( response.status !== 200 ) {
@@ -185,6 +199,7 @@ class WordPressPostList extends PostList {
 	updateContent() {
 		this.innerHTML = '';
 
+		// If in loading state, display the loader and bail.
 		if ( this._loading ) {
 			if ( ! this.shadowRoot.querySelector( '.loader' ) ) {
 				this.shadowRoot.appendChild( loaderTemplate.content.cloneNode( true ) );
@@ -192,6 +207,7 @@ class WordPressPostList extends PostList {
 			return;
 		}
 
+		// Remove the loader.
 		const loader = this.shadowRoot.querySelector( '.loader' );
 		if ( loader ) {
 			this.shadowRoot.removeChild( loader );
@@ -201,6 +217,7 @@ class WordPressPostList extends PostList {
 			return;
 		}
 
+		// Determine whether to display post dates and which date format to use.
 		let dateFormat = undefined;
 		if ( this.hasAttribute( 'display-date' ) ) {
 			dateFormat = this.getAttribute( 'display-date' );
@@ -209,6 +226,7 @@ class WordPressPostList extends PostList {
 			}
 		}
 
+		// Append a PostListItem for each post.
 		this._posts.forEach( post => {
 			this.appendChild( getPostListItem( post, dateFormat ) );
 		} );

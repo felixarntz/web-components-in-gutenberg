@@ -29,11 +29,12 @@ function register_custom_elements() {
 	$assets_dir  = plugin_dir_url( __FILE__ ) . 'assets/custom-elements/';
 
 	$modules = array(
-		'wcig-tab'                    => 'tab.js',
-		'wcig-tab-panel'              => 'tab-panel.js',
-		'wcig-tabs'                   => 'tabs.js',
-		'wcig-post-list-item'         => 'post-list-item.js',
-		'wcig-post-list'              => 'post-list.js',
+		'wcig-tab'                 => 'tab.js',
+		'wcig-tab-panel'           => 'tab-panel.js',
+		'wcig-tabs'                => 'tabs.js',
+		'wcig-post-list-item'      => 'post-list-item.js',
+		'wcig-post-list'           => 'post-list.js',
+		'wcig-wordpress-post-list' => 'wordpress-post-list.js',
 	);
 
 	foreach ( $modules as $handle => $rel_path ) {

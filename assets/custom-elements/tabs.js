@@ -1,6 +1,11 @@
 /*
  * Tabs custom element module.
  *
+ * This custom element represents a tabbed UI consisting of one or more
+ * tabs and optionally their associated tab panels. This wrapper element
+ * must be present to handle the dynamic functionality, which it does in
+ * a way accessible for screen readers and keyboard users.
+ *
  * Web Components in Gutenberg, Copyright 2019 Google LLC
  *
  * This program is free software: you can redistribute it and/or modify

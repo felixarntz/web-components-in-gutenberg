@@ -1,6 +1,8 @@
 /*
  * Tab custom element module.
  *
+ * This custom element represents a single tab within a Tabs element.
+ *
  * Web Components in Gutenberg, Copyright 2019 Google LLC
  *
  * This program is free software: you can redistribute it and/or modify

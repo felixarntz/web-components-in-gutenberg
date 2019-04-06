@@ -5,11 +5,24 @@ This WordPress plugin contains two examples for using Web Components in WordPres
 * [Tabs in WP Admin](#tabs-in-wp-admin)
 * [Latest Posts block type in Gutenberg](#latest-posts-block-type-in-gutenberg)
 
+The code in these examples uses several modern technologies and best practices and it also aims to be a 100% native to browser features. In other words, there's no preprocessing, precompiling or transpiling necessary at all for any of this code - even for the React part.
+
 Learn more about Web Components:
 
 * https://developers.google.com/web/fundamentals/web-components/customelements
 * https://developers.google.com/web/fundamentals/web-components/shadowdom
 * https://developers.google.com/web/fundamentals/web-components/best-practices
+
+Learn more about other cool technologies and libraries used in these examples:
+
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+* https://developers.google.com/web/fundamentals/primers/async-functions
+* https://developers.google.com/web/fundamentals/primers/promises
+* https://developers.google.com/web/fundamentals/primers/modules
+* https://developers.google.com/web/updates/2017/09/abortable-fetch
+* https://github.com/developit/htm
 
 ## Tabs in WP Admin
 
@@ -30,3 +43,7 @@ Using Web Components for the output of a Gutenberg block type allows you to use 
 ### Demo Video
 
 [![Web Components Latest Posts block type in Gutenberg Demo](http://img.youtube.com/vi/MEkMSHdP-E8/0.jpg)](http://www.youtube.com/watch?v=MEkMSHdP-E8 "")
+
+## Disclaimer
+
+Keep in mind that the code in this repository is demo code and may not be structured in an optimal way for a real-world project.

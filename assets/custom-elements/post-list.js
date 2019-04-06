@@ -1,6 +1,10 @@
 /*
  * PostList custom element module.
  *
+ * This custom element represents a list of posts that should contain zero
+ * or more PostListItem elements. The element is not tied to WordPress in
+ * any way.
+ *
  * Web Components in Gutenberg, Copyright 2019 Google LLC
  *
  * This program is free software: you can redistribute it and/or modify

@@ -1,6 +1,11 @@
 /*
  * PostListItem custom element module.
  *
+ * This custom element represents a post in a PostList. It can include a
+ * title (in the default slot), an extra annotation (for example that
+ * could be the post date), and a link (via the href attribute). The
+ * element is not tied to WordPress in any way.
+ *
  * Web Components in Gutenberg, Copyright 2019 Google LLC
  *
  * This program is free software: you can redistribute it and/or modify
